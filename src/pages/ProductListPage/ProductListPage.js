@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import ProductList from "./../../components/ProductList/ProductList";
 import ProductItem from "./../../components/ProductItem/ProductItem";
+import { connect } from "react-redux";
 
 class ProductListPage extends Component {
   render() {
-    var products = [];
+    var {productlist} = this.props;
     return (
       <div>
         <div className="mt-2">
@@ -14,7 +15,7 @@ class ProductListPage extends Component {
         </div>
 
         <div>
-          <ProductList>{this.showProduct(products)}</ProductList>
+          <ProductList>{this.showProduct(productlist)}</ProductList>
         </div>
       </div>
     );
@@ -29,5 +30,10 @@ class ProductListPage extends Component {
     return result;
   };
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    productlist: state.ProductsRD
+  }
+}
 
-export default ProductListPage;
+export default connect(mapStateToProps,null)(ProductListPage);

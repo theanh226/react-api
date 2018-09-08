@@ -13,12 +13,12 @@ class ProductItem extends Component {
       <tr>
         <td>{index}</td>
         <td>{product.code}</td>
-        <td>{product.name}</td>
-        <td>{product.description} </td>
-        <td>{product.price}</td>
-        <td>{showStatus}</td>
+        <td className="text-uppercase">{product.name}</td>
+        <td className="text-uppercase">{product.description} </td>
+        <td className="text-uppercase text-bold">{product.price}$</td>
+        <td >{showStatus}</td>
         <td>
-          <button className="btn btn-success mr1">Edit</button>
+          <button className="btn btn-success mr-1">Edit</button>
           <button className="btn btn-danger">Delete</button>
         </td>
       </tr>
