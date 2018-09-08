@@ -8,7 +8,7 @@ class Menu extends Component {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             <a className="nav-item nav-link">
-              Home <span className="sr-only">(current)</span>
+              Home 
             </a>
             <a className="nav-item nav-link">Product list</a>
           </div>
