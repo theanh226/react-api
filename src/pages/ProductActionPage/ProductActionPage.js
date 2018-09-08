@@ -13,13 +13,13 @@ class ProductActionPage extends Component {
             <label>Price Product:</label>
             <input type="number" className="form-control" />
           </div>
-          <div className="form-group">
+          <div className="form-group mb-0">
             <label>Status:</label>
           </div>
-          <div className="checkbox">
+          <div className="checkbox mb-3">
             <lavel>
               <input type="checkbox" />
-              available
+              <span className="ml-2">available</span>
             </lavel>
           </div>
           <button class="btn btn-success">Save</button>
