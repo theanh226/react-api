@@ -2,10 +2,29 @@ import React, { Component } from "react";
 import ProductList from "./../../components/ProductList/ProductList";
 import ProductItem from "./../../components/ProductItem/ProductItem";
 import { connect } from "react-redux";
-
+import axios from "axios";
+import callApi from "./../../utils/apiCaller";
 class ProductListPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productlist: []
+    };
+  }
+
+  componentDidMount() {
+callApi('products','GET',null).then(res =>{
+  this.setState({
+    productlist : res.data
+  })
+})
+  }
+
   render() {
-    var {productlist} = this.props;
+    // var { productlist } = this.props;
+
+    var { productlist } = this.state;
+
     return (
       <div>
         <div className="mt-2">
@@ -33,7 +52,10 @@ class ProductListPage extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     productlist: state.ProductsRD
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps,null)(ProductListPage);
+export default connect(
+  mapStateToProps,
+  null
+)(ProductListPage);
