@@ -11,25 +11,40 @@ class ProductActionPage extends Component {
       nameProduct: "",
       priceProduct: "",
       checkbox: false,
-      saved: false
+      saved: false,
+      updated: false
     };
   }
 
   onSubmit = e => {
     e.preventDefault();
     // var { history } = this.props;
-    var { nameProduct, priceProduct, checkbox } = this.state;
-    callApi("products", "POST", {
-      name: nameProduct,
-      code: randomstring.generate(10),
-      price: priceProduct,
-      status: checkbox
-    }).then(res => {
-      console.log(res);
-      this.setState({
-        saved: true
-      }); //history.push("/product-list"); //use as redirect link
-    });
+    var { id, nameProduct, priceProduct, checkbox } = this.state;
+    console.log("test log id : " + id);
+    if (id) {
+      console.log("Update...");
+      callApi(`products/${id}`, "PUT", {
+        name: nameProduct,
+        code: randomstring.generate(10),
+        price: priceProduct,
+        status: checkbox
+      }).then(res => {
+        this.setState({
+          updated: true
+        }); //history.push("/product-list"); //use as redirect link
+      });
+    } else {
+      callApi("products", "POST", {
+        name: nameProduct,
+        code: randomstring.generate(10),
+        price: priceProduct,
+        status: checkbox
+      }).then(res => {
+        this.setState({
+          saved: true
+        }); //history.push("/product-list"); //use as redirect link
+      });
+    }
   };
 
   onChange = e => {
@@ -48,6 +63,7 @@ class ProductActionPage extends Component {
       callApi(`/products/${id}`, "GET", null).then(res => {
         var data = res.data;
         this.setState({
+          id: data.id,
           nameProduct: data.name,
           priceProduct: data.price,
           checkbox: data.status
@@ -63,11 +79,19 @@ class ProductActionPage extends Component {
       </h2>
     );
 
-    var { nameProduct, priceProduct, checkbox, saved } = this.state;
+    var Notification_updated = (
+      <h2 className="badge badge-pill badge-warning">
+        Your product has been updated
+      </h2>
+    );
+
+    var { nameProduct, priceProduct, checkbox, saved, updated } = this.state;
     var Shownoti = saved === true ? Notification_added : "";
+    var showUpdate = updated === true ? Notification_updated : "";
     return (
       <div className="container w-75">
         {Shownoti}
+        {showUpdate}
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Name Product:</label>
