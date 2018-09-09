@@ -7,12 +7,14 @@ import "font-awesome/css/font-awesome.min.css";
 import { Provider } from "react-redux";
 import rootReducer from "./reducers/index";
 import registerServiceWorker from "./registerServiceWorker";
+import thunk from "redux-thunk";
 
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 
 const store = createStore(
   rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk) 
 );
 
 ReactDOM.render(

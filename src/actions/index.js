@@ -1,0 +1,36 @@
+import * as Types from "./../constants/ActionType";
+import callApi from "./../utils/apiCaller";
+
+export const fetchData = products => {
+  return {
+    type: Types.FETCH_DATA,
+    products
+  };
+};
+
+export const fetchProductRequest = () => {
+  return dispatch => {
+    callApi("products", "GET", null).then(res => {
+      dispatch(fetchData(res.data));
+    });
+  };
+};
+export const deleteProduct = () => {
+  return {
+    type: Types.DELETE_PRODUCT
+  };
+};
+
+export const addProduct = newProduct => {
+  return {
+    type: Types.ADD_PRODUCT,
+    newProduct
+  };
+};
+
+export const updateProduct = updateProduct => {
+  return {
+    type: Types.UPDATE_PRODUCT,
+    updateProduct
+  };
+};

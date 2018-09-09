@@ -8,8 +8,7 @@ class ProductItem extends Component {
     }
   };
   render() {
-    
-    var { product, index } = this.props;
+    var { product } = this.props;
     var showStatus =
       product.status === true ? (
         <span className="badge badge-success mr-1">available</span>
