@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class ProductItem extends Component {
   onDelete = code => {
@@ -7,6 +8,7 @@ class ProductItem extends Component {
     }
   };
   render() {
+    
     var { product, index } = this.props;
     var showStatus =
       product.status === true ? (
@@ -16,14 +18,19 @@ class ProductItem extends Component {
       );
     return (
       <tr>
-        <td>{index}</td>
+        <td>{product.id}</td>
         <td>{product.code}</td>
         <td className="text-uppercase">{product.name}</td>
         <td className="text-uppercase">{product.description} </td>
         <td className="text-uppercase text-bold">{product.price}$</td>
         <td>{showStatus}</td>
         <td>
-          <button className="btn btn-success mr-1">Edit</button>
+          <Link
+            to={`/product/${product.id}/edit`}
+            className="btn btn-success mr-1"
+          >
+            Edit
+          </Link>
           <button
             className="btn btn-danger"
             onClick={() => this.onDelete(product.id)}

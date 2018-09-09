@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import callApi from "../../utils/apiCaller";
 import { Link } from "react-router-dom";
-import randomstring from 'randomstring';
+import randomstring from "randomstring";
 
 class ProductActionPage extends Component {
   constructor(props) {
@@ -10,18 +10,18 @@ class ProductActionPage extends Component {
       id: "",
       nameProduct: "",
       priceProduct: "",
-      checkbox: "",
+      checkbox: false,
       saved: false
     };
   }
 
   onSubmit = e => {
     e.preventDefault();
-   // var { history } = this.props;
+    // var { history } = this.props;
     var { nameProduct, priceProduct, checkbox } = this.state;
     callApi("products", "POST", {
       name: nameProduct,
-      code:randomstring.generate(10),
+      code: randomstring.generate(10),
       price: priceProduct,
       status: checkbox
     }).then(res => {
@@ -40,6 +40,21 @@ class ProductActionPage extends Component {
       [name]: value
     });
   };
+
+  componentDidMount() {
+    var { match } = this.props;
+    if (match) {
+      var id = match.params.id;
+      callApi(`/products/${id}`, "GET", null).then(res => {
+        var data = res.data;
+        this.setState({
+          nameProduct: data.name,
+          priceProduct: data.price,
+          checkbox: data.status
+        });
+      });
+    }
+  }
 
   render() {
     var Notification_added = (
@@ -84,6 +99,7 @@ class ProductActionPage extends Component {
                 name="checkbox"
                 onChange={this.onChange}
                 value={checkbox}
+                checked={checkbox}
               />
               <span className="ml-2">available</span>
             </label>
