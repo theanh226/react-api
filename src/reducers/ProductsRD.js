@@ -1,4 +1,4 @@
-import * as types from "./../constants/ActionType";
+
 var randomstring = require("randomstring");
 var initialState = [
   {
