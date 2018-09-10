@@ -35,19 +35,46 @@ export const addProduct = newProduct => {
     type: Types.ADD_PRODUCT,
     newProduct
   };
-}; 
+};
 
 export const addProductRequest = newProduct => {
   return dispatch => {
-   callApi('products', "POST", newProduct).then(res => {
+    callApi("products", "POST", newProduct).then(res => {
       dispatch(addProduct(res.data));
     });
   };
 };
 
-export const updateProduct = updateProduct => {
+//get product to update
+
+export const getProductToUpdate = product => {
+  return {
+    type: Types.GET_PRODUCT_TO_UPDATE,
+    product
+  };
+};
+
+export const getProductToUpdateRequest = id => {
+  return dispatch => {
+    callApi(`products/${id}`, "GET", id).then(res => {
+      dispatch(getProductToUpdate(res.data));
+    });
+  };
+};
+
+//Update Product
+
+export const updateProduct = product => {
   return {
     type: Types.UPDATE_PRODUCT,
-    updateProduct
+    product
+  };
+};
+
+export const updateProductRequest = product => {
+  return dispatch => {
+    callApi(`products/${product.id}`, "PUT", product).then(res => {
+      dispatch(updateProduct(res.data));
+    });
   };
 };

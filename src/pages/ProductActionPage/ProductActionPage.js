@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import callApi from "../../utils/apiCaller";
 import { Link } from "react-router-dom";
 import randomstring from "randomstring";
 import * as actions from "./../../actions/index";
@@ -23,24 +22,25 @@ class ProductActionPage extends Component {
     // var { history } = this.props;
     var { id, nameProduct, priceProduct, checkbox } = this.state;
     var product = {
+      id:id,
       name: nameProduct,
       code: randomstring.generate(10),
       price: priceProduct,
       status: checkbox
     };
-    console.log("test log id : " + id);
+
     if (id) {
-      console.log("Update...");
-      callApi(`products/${id}`, "PUT", {
-        name: nameProduct,
-        code: randomstring.generate(10),
-        price: priceProduct,
-        status: checkbox
-      }).then(res => {
-        this.setState({
-          updated: true
-        }); //history.push("/product-list"); //use as redirect link
-      });
+      this.props.onUpdateProduct(product);
+      // callApi(`products/${id}`, "PUT", {
+      //   name: nameProduct,
+      //   code: randomstring.generate(10),
+      //   price: priceProduct,
+      //   status: checkbox
+      // }).then(res => {
+      this.setState({
+        updated: true
+      }); //history.push("/product-list"); //use as redirect link
+      // });
     } else {
       this.props.addNewProduct(product);
       this.setState({
@@ -62,14 +62,18 @@ class ProductActionPage extends Component {
     var { match } = this.props;
     if (match) {
       var id = match.params.id;
-      callApi(`/products/${id}`, "GET", null).then(res => {
-        var data = res.data;
-        this.setState({
-          id: data.id,
-          nameProduct: data.name,
-          priceProduct: data.price,
-          checkbox: data.status
-        });
+      this.props.onEditProduct(id);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.editProduct) {
+      var { editProduct } = nextProps;
+      this.setState({
+        id: editProduct.id,
+        nameProduct: editProduct.name,
+        priceProduct: editProduct.price,
+        checkbox: editProduct.status
       });
     }
   }
@@ -142,15 +146,27 @@ class ProductActionPage extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    editProduct: state.editProduct
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     addNewProduct: product => {
       dispatch(actions.addProductRequest(product));
+    },
+    onEditProduct: id => {
+      dispatch(actions.getProductToUpdateRequest(id));
+    },
+    onUpdateProduct: product => {
+      dispatch(actions.updateProductRequest(product));
     }
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ProductActionPage);

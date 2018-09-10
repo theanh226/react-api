@@ -2,3 +2,4 @@ export const FETCH_DATA = "FETCH_DATA";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const GET_PRODUCT_TO_UPDATE = "GET_PRODUCT_TO_UPDATE";
