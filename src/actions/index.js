@@ -15,9 +15,18 @@ export const fetchProductRequest = () => {
     });
   };
 };
-export const deleteProduct = () => {
+export const deleteProduct = id => {
   return {
-    type: Types.DELETE_PRODUCT
+    type: Types.DELETE_PRODUCT,
+    id
+  };
+};
+
+export const deleteProductRequest = id => {
+  return dispatch => {
+    callApi(`products/${id}`, "DELETE", null).then(res => {
+      dispatch(deleteProduct(id));
+    });
   };
 };
 
