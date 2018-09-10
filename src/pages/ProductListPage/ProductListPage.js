@@ -11,18 +11,6 @@ class ProductListPage extends Component {
 
   onDelete = id => {
     this.props.deleteProduct(id);
-    // var { productlist } = this.state;
-    // callApi(`products/${id}`, "DELETE", null).then(res => {
-    //   if (res.request.status === 200) {
-    //     var index = this.findIndex(productlist, id);
-    //     if (index !== -1) {
-    //       productlist.slice(index, 1);
-    //       this.setState({
-    //         productlist: productlist
-    //       });
-    //     }
-    //   }
-    // });
   };
 
   findIndex = (products, id) => {

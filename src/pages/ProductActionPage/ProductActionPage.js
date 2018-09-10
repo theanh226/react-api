@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import callApi from "../../utils/apiCaller";
 import { Link } from "react-router-dom";
 import randomstring from "randomstring";
+import * as actions from "./../../actions/index";
+import { connect } from "react-redux";
 
 class ProductActionPage extends Component {
   constructor(props) {
@@ -20,6 +22,12 @@ class ProductActionPage extends Component {
     e.preventDefault();
     // var { history } = this.props;
     var { id, nameProduct, priceProduct, checkbox } = this.state;
+    var product = {
+      name: nameProduct,
+      code: randomstring.generate(10),
+      price: priceProduct,
+      status: checkbox
+    };
     console.log("test log id : " + id);
     if (id) {
       console.log("Update...");
@@ -34,15 +42,9 @@ class ProductActionPage extends Component {
         }); //history.push("/product-list"); //use as redirect link
       });
     } else {
-      callApi("products", "POST", {
-        name: nameProduct,
-        code: randomstring.generate(10),
-        price: priceProduct,
-        status: checkbox
-      }).then(res => {
-        this.setState({
-          saved: true
-        }); //history.push("/product-list"); //use as redirect link
+      this.props.addNewProduct(product);
+      this.setState({
+        saved: true
       });
     }
   };
@@ -140,4 +142,15 @@ class ProductActionPage extends Component {
   }
 }
 
-export default ProductActionPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewProduct: product => {
+      dispatch(actions.addProductRequest(product));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ProductActionPage);

@@ -35,6 +35,14 @@ export const addProduct = newProduct => {
     type: Types.ADD_PRODUCT,
     newProduct
   };
+}; 
+
+export const addProductRequest = newProduct => {
+  return dispatch => {
+   callApi('products', "POST", newProduct).then(res => {
+      dispatch(addProduct(res.data));
+    });
+  };
 };
 
 export const updateProduct = updateProduct => {
