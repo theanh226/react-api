@@ -21,13 +21,20 @@
 .App-intro {
   font-size: large;
 }
-.active{
-  color:red !important;
+.active {
+  color: red !important;
 }
-.text-black{
-  color: black
+.text-black {
+  color: black;
+}
+.max-width-10 {
+  max-width: 10em;
 }
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

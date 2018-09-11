@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 class ProductItem extends Component {
   onDelete = code => {
-    if (confirm("are you sure remove this product?")) {//eslint-disable-line
+    if (confirm("are you sure remove this product?")) { //eslint-disable-line
+     
       this.props.onDelete(code);
     }
   };
@@ -19,9 +20,18 @@ class ProductItem extends Component {
       <tr>
         <td>{product.id}</td>
         <td>{product.code}</td>
-        <td className="text-uppercase">{product.name}</td>
-        <td className="text-uppercase">{product.description} </td>
-        <td className="text-uppercase text-bold">{product.price}$</td>
+        <td className="text-uppercase max-width-10">
+ 
+          <p className="text-truncate">{product.name} </p>
+        </td>
+        <td className="text-uppercase max-width-10">
+
+          <p className="text-truncate">{product.description}</p>{" "}
+        </td>
+        <td className="text-uppercase text-bold max-width-10">
+  
+          <p className="text-truncate">{product.price} $</p>  
+        </td>
         <td>{showStatus}</td>
         <td>
           <Link
